@@ -1,0 +1,1144 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
+
+/* ==========================================================================
+   phpIPAM Modern — a theme layer for phpIPAM 1.8.x (Bootstrap 3.4.1)
+   Loads AFTER css/bootstrap/bootstrap-custom-dark.css.
+
+   Every rule sits inside "html body:not(#_) { … }". The :not(#_) adds one
+   ID worth of specificity, so these rules beat the stock dark theme's
+   "html …" selectors without per-rule specificity math. Requires native CSS
+   nesting and :has() (Chrome/Edge 112+, Safari 16.5+, Firefox 121+).
+
+   Colours, radii and fonts live in the :root tokens below — tweak there.
+   ========================================================================== */
+
+/* The font stacks use locally installed Inter and JetBrains Mono when
+   available, then fall back to the operating system's UI and monospace fonts. */
+
+:root {
+  --ipam-bg: #0b0e13;
+  --ipam-surface: #11151c;
+  --ipam-surface-2: #171c25;
+  --ipam-surface-3: #1f2632;
+  --ipam-border: #212833;
+  --ipam-border-strong: #2d3644;
+
+  --ipam-text: #e6e9ef;
+  --ipam-text-muted: #9ba5b6;
+  --ipam-text-faint: #6b7587;
+
+  --ipam-accent: #4c9dff;
+  --ipam-accent-strong: #2f7fe6;
+  --ipam-accent-hover: #7cb6ff;
+  --ipam-accent-soft: rgba(76, 157, 255, 0.12);
+  --ipam-accent-ring: rgba(76, 157, 255, 0.35);
+
+  --ipam-success: #3fb950;
+  --ipam-success-text: #7ee787;
+  --ipam-success-soft: rgba(63, 185, 80, 0.12);
+  --ipam-warning: #d29922;
+  --ipam-warning-text: #e3b341;
+  --ipam-warning-soft: rgba(210, 153, 34, 0.13);
+  --ipam-danger: #f85149;
+  --ipam-danger-text: #ff7b72;
+  --ipam-danger-soft: rgba(248, 81, 73, 0.12);
+
+  --ipam-radius-sm: 6px;
+  --ipam-radius: 8px;
+  --ipam-radius-lg: 12px;
+  --ipam-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.3);
+  --ipam-shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.55);
+
+  --ipam-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ipam-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --ipam-nav-h: 44px;
+
+  color-scheme: dark;
+  scrollbar-color: #2b3341 transparent;
+}
+
+::selection {
+  background: rgba(76, 157, 255, 0.35);
+  color: #fff;
+}
+
+html body:not(#_) {
+  /* ---------------------------------------------------------------- base */
+  background: var(--ipam-bg) !important;
+  color: var(--ipam-text);
+  font-family: var(--ipam-font);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  & .wrapper {
+    background: transparent !important;
+    height: auto !important;
+    min-height: 100%;
+  }
+
+  & h1, & h2, & h3, & h4, & h5 {
+    font-family: var(--ipam-font);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ipam-text) !important;
+    text-shadow: none;
+  }
+
+  & a {
+    color: var(--ipam-accent);
+    transition: color 0.15s ease;
+  }
+  & a:hover, & a:focus {
+    color: var(--ipam-accent-hover);
+    text-decoration: none;
+  }
+
+  & hr {
+    border-top: 0;
+    border-bottom: 1px solid var(--ipam-border);
+  }
+
+  & .text-muted, & .muted, & .info2, & table td.info2 {
+    color: var(--ipam-text-faint) !important;
+  }
+
+  & pre, & code {
+    font-family: var(--ipam-mono);
+    background: var(--ipam-bg) !important;
+    border: 1px solid var(--ipam-border) !important;
+    color: var(--ipam-text-muted) !important;
+    border-radius: var(--ipam-radius-sm);
+  }
+
+  & .fa-gray, & i.fa-gray, & .icon-gray {
+    color: var(--ipam-text-faint) !important;
+  }
+
+  /* -------------------------------------------------------------- header */
+  & #header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 10px 20px;
+    min-height: 60px;
+    background: var(--ipam-surface) !important;
+    border-bottom: 1px solid var(--ipam-border);
+  }
+  & #header::before, & #header::after { display: none; }
+  & #header > div {
+    float: none;
+    width: auto;
+    padding: 0;
+  }
+  & #header > div:nth-child(1) { flex: 0 0 auto; }
+  & #header > div:nth-child(1) img {
+    display: block;
+    height: 28px;
+    width: auto;
+  }
+  & #header > div:nth-child(2) {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid var(--ipam-border-strong);
+  }
+  & #header #user_menu {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  & .hero-pusher { display: none !important; }
+  & .hero-unit {
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+  }
+  & .hero-unit, & .hero-unit a {
+    font-family: var(--ipam-font);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    color: var(--ipam-text);
+    text-shadow: none;
+  }
+  & .hero-unit p.muted {
+    margin: 0;
+    padding: 2px 0 0;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--ipam-text-faint) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  & .hero-unit p.muted a {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--ipam-text-muted);
+  }
+  & .hero-unit p.muted a:hover { color: var(--ipam-text); }
+  & .hero-unit span, & .hero-unit span.divider { color: var(--ipam-text-faint); padding: 0 4px; }
+
+  /* user menu: [ search ] [ name / role ] [ logout ] */
+  & #user_menu .container-fluid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 240px auto auto;
+    align-items: center;
+    column-gap: 14px;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+  & #user_menu .container-fluid::before, & #user_menu .container-fluid::after { display: none; }
+  & #user_menu .container-fluid > br { display: none; }
+  & #user_menu #searchForm {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    margin: 0;
+  }
+  & #user_menu .container-fluid > a:first-of-type {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--ipam-text);
+  }
+  & #user_menu .container-fluid > span.info {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    font-size: 11px;
+    line-height: 1.3;
+    color: var(--ipam-text-faint);
+  }
+  & #user_menu .container-fluid > a:last-of-type {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ipam-text-muted);
+    border: 1px solid var(--ipam-border-strong);
+    border-radius: var(--ipam-radius-sm);
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+  & #user_menu .container-fluid > a:last-of-type:hover {
+    color: var(--ipam-text);
+    background: var(--ipam-surface-2);
+    border-color: #3b4657;
+  }
+  & #searchSelect {
+    top: calc(100% + 6px);
+    left: 0;
+    width: 240px;
+    margin: 0;
+    padding: 8px 10px;
+    z-index: 200;
+    background: var(--ipam-surface-2) !important;
+    border: 1px solid var(--ipam-border-strong);
+    border-radius: var(--ipam-radius);
+    box-shadow: var(--ipam-shadow);
+    color: var(--ipam-text-muted);
+  }
+
+  /* ------------------------------------------------------------ main nav */
+  & .content {
+    position: sticky;
+    top: 0;
+    z-index: 95;
+  }
+  & #menu { background: transparent; }
+  & #menu-navbar.navbar {
+    min-height: var(--ipam-nav-h);
+    padding: 0 12px;
+    background: rgba(17, 21, 28, 0.92) !important;
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    backdrop-filter: saturate(140%) blur(10px);
+    border: 0 !important;
+    border-bottom: 1px solid var(--ipam-border) !important;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  & #menu-navbar .navbar-nav > li { background: transparent !important; }
+  & #menu-navbar .navbar-nav + .navbar-nav:not(.navbar-right) {
+    margin-left: 4px !important;
+    padding-left: 4px;
+    border-left: 1px solid var(--ipam-border);
+  }
+  & #menu-navbar .navbar-nav > li > a {
+    height: var(--ipam-nav-h);
+    line-height: var(--ipam-nav-h);
+    padding: 0 12px !important;
+    font-size: 13px;
+    font-weight: 500 !important;
+    color: var(--ipam-text-muted) !important;
+    background: transparent !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-radius: 0 !important;
+    transition: color 0.15s, background-color 0.15s, box-shadow 0.15s;
+  }
+  & #menu-navbar .navbar-nav > li > a .fa { color: inherit !important; }
+  & #menu-navbar .navbar-nav > li > a:hover,
+  & #menu-navbar .navbar-nav > li > a:focus,
+  & #menu-navbar .navbar-nav > li.open > a {
+    color: var(--ipam-text) !important;
+    background: var(--ipam-surface-2) !important;
+  }
+  & #menu-navbar .navbar-nav > li.active > a {
+    color: var(--ipam-text) !important;
+    background: transparent !important;
+    box-shadow: inset 0 -2px 0 var(--ipam-accent);
+  }
+  & #menu-navbar .navbar-nav > li > a:focus { outline: 0; }
+  & #menu-navbar .navbar-nav > li > a:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--ipam-accent-ring);
+  }
+
+  /* right-hand icon buttons */
+  & #menu-navbar ul.icon-ul > li {
+    margin: 6px 2px !important;
+    min-width: 0;
+    background: transparent !important;
+    border-radius: var(--ipam-radius-sm) !important;
+  }
+  & #menu-navbar ul.icon-ul > li > a {
+    height: 32px;
+    line-height: 32px;
+    padding: 0 10px !important;
+    border: 1px solid var(--ipam-border-strong);
+    border-radius: var(--ipam-radius-sm) !important;
+  }
+  & #menu-navbar ul.icon-ul > li.active > a {
+    box-shadow: none;
+    border-color: var(--ipam-accent);
+    color: var(--ipam-accent-hover) !important;
+    background: var(--ipam-accent-soft) !important;
+  }
+
+  /* Administration — keep it findable, drop the red slab */
+  & #menu-navbar .navbar-nav > li.administration > a {
+    color: var(--ipam-danger-text) !important;
+    background: var(--ipam-danger-soft) !important;
+  }
+  & #menu-navbar .navbar-nav > li.administration > a:hover,
+  & #menu-navbar .navbar-nav > li.administration.open > a,
+  & #menu-navbar .navbar-nav > li.administration.active > a {
+    color: #ffa198 !important;
+    background: rgba(248, 81, 73, 0.2) !important;
+  }
+
+  /* ----------------------------------------------------------- dropdowns */
+  & .dropdown-menu,
+  & #menu-navbar .dropdown-menu {
+    background: var(--ipam-surface-2) !important;
+    border: 1px solid var(--ipam-border-strong) !important;
+    border-radius: var(--ipam-radius) !important;
+    box-shadow: var(--ipam-shadow) !important;
+    padding: 4px !important;
+    margin-top: 4px !important;
+    min-width: 200px;
+  }
+  /* nav is sticky, so long menus (Administration) must scroll themselves */
+  & #menu-navbar .dropdown-menu {
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  & .dropdown-menu > li,
+  & #menu-navbar .dropdown-menu > li {
+    background: transparent !important;
+    border: 0 !important;
+  }
+  & .dropdown-menu > li > a,
+  & #menu-navbar .dropdown-menu > li > a {
+    padding: 6px 10px !important;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ipam-text) !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 5px !important;
+  }
+  & .dropdown-menu > li > a:hover, & .dropdown-menu > li > a:focus,
+  & #menu-navbar .dropdown-menu > li > a:hover, & #menu-navbar .dropdown-menu > li > a:focus {
+    color: #fff !important;
+    background: var(--ipam-surface-3) !important;
+  }
+  & .dropdown-menu > li.active > a,
+  & #menu-navbar .dropdown-menu > li.active > a {
+    color: var(--ipam-accent-hover) !important;
+    background: var(--ipam-accent-soft) !important;
+  }
+  & .dropdown-menu .divider,
+  & #menu-navbar .dropdown-menu .divider {
+    height: 1px;
+    margin: 4px 0 !important;
+    background-color: var(--ipam-border-strong) !important;
+  }
+  & .dropdown-menu > li.nav-header,
+  & .dropdown-menu > .dropdown-header,
+  & #menu-navbar .dropdown-menu > li.nav-header {
+    padding: 10px 10px 4px !important;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ipam-text-faint) !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  /* ------------------------------------------------------------- content */
+  & .content_overlay { padding-bottom: 56px; }
+  & #mainContainer { padding: 0; }
+
+  & table#subnetsMenu td#subnetsContent {
+    padding: 18px 20px;
+  }
+  & #subnetsContent h4, & #content > h4, & #content h4 {
+    font-size: 15px;
+    margin: 6px 0 12px;
+  }
+
+  /* ---------------------------------------------------- left subnet tree */
+  & table#subnetsMenu td#subnetsLeft {
+    width: 210px;
+    background: var(--ipam-surface);
+    border-right: 1px solid var(--ipam-border) !important;
+    padding-bottom: 60px;
+  }
+  & table#subnetsMenu td#subnetsLeft .menu-subnets { margin-top: 0; }
+  & table#subnetsMenu td#subnetsLeft h4 {
+    margin: 0;
+    padding: 16px 14px 8px !important;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ipam-text-faint) !important;
+    background: transparent !important;
+    border-bottom: 0 !important;
+  }
+  & table#subnetsMenu td#subnetsLeft ul#subnets {
+    margin: 0 10px 12px 10px;
+    padding: 0;
+  }
+  & table#subnetsMenu td#subnetsLeft ul#subnets li {
+    padding: 1px 0;
+    line-height: 22px;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+  }
+  & table#subnetsMenu td#subnetsLeft ul#subnets li a {
+    display: inline-block;
+    padding: 0 6px;
+    border-radius: 5px;
+    font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ipam-text-muted) !important;
+    transition: color 0.12s, background-color 0.12s;
+  }
+  & table#subnetsMenu td#subnetsLeft ul#subnets li a:hover {
+    color: var(--ipam-text) !important;
+    background: var(--ipam-surface-2);
+  }
+  & table#subnetsMenu td#subnetsLeft ul#subnets li.active > a {
+    color: #fff !important;
+    font-weight: 600;
+    background: var(--ipam-accent-soft);
+    box-shadow: inset 0 0 0 1px rgba(76, 157, 255, 0.35);
+  }
+  & table#subnetsMenu td#subnetsLeft ul#subnets i.fa {
+    width: 14px;
+    text-align: center;
+    color: var(--ipam-text-faint) !important;
+  }
+  /* replace the PNG connector lines with CSS guides */
+  & table#subnetsMenu td#subnetsLeft ul.submenu {
+    margin: 0 0 0 6px;
+    padding: 0;
+    background-image: none !important;
+    border-left: 1px solid var(--ipam-border-strong);
+  }
+  & table#subnetsMenu td#subnetsLeft ul.submenu > li {
+    position: relative;
+    padding-left: 12px !important;
+  }
+  & table#subnetsMenu td#subnetsLeft ul.submenu > li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 8px;
+    border-top: 1px solid var(--ipam-border-strong);
+  }
+  & table#subnetsMenu td#subnetsLeft ul.submenu > li.leaf > i.fa-angle-right { display: none; }
+
+  /* --------------------------------------------------------------- cards */
+  & #dashboard { padding: 4px 12px 0; }
+  & #dashboard .welcome {
+    padding: 8px 8px 0;
+    text-align: right;
+    font-family: var(--ipam-mono);
+    font-size: 11px;
+    color: var(--ipam-text-faint);
+  }
+  & #dashboard .inner {
+    margin: 8px 4px 16px;
+    background: var(--ipam-surface) !important;
+    border: 1px solid var(--ipam-border) !important;
+    border-radius: var(--ipam-radius-lg) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+    overflow: hidden;
+  }
+  & #dashboard .inner h4 {
+    margin: 0;
+    padding: 14px 16px 12px !important;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--ipam-text) !important;
+    background: transparent !important;
+    border-bottom: 1px solid var(--ipam-border);
+  }
+  & #dashboard .inner .hContent { border-top: 0 !important; }
+  & #dashboard .inner i.icon-action {
+    margin: 16px 14px 0 0;
+    color: var(--ipam-text-faint) !important;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  & #dashboard .inner:hover i.icon-action { opacity: 1; }
+  & #dashboard .inner .hContent .icon { border-right-color: var(--ipam-border) !important; }
+  /* Administration / Tools index tiles */
+  & #dashboard.tools-all .inner {
+    transition: border-color 0.15s, background-color 0.15s;
+  }
+  & #dashboard.tools-all .inner:hover {
+    background: var(--ipam-surface-2) !important;
+    border-color: rgba(76, 157, 255, 0.45) !important;
+  }
+
+  & table.table.statistics td {
+    padding: 7px 16px;
+    border: 0 !important;
+    color: var(--ipam-text-muted);
+  }
+  & table.table.statistics tr + tr td { border-top: 1px solid var(--ipam-border) !important; }
+
+  & .panel, & .panel.panel-default {
+    background: var(--ipam-surface) !important;
+    border: 1px solid var(--ipam-border) !important;
+    border-radius: var(--ipam-radius-lg);
+    box-shadow: none;
+    overflow: hidden;
+  }
+  & .panel-default > .panel-heading, & .panel.panel-default .panel-heading {
+    background: transparent !important;
+    border-bottom: 1px solid var(--ipam-border) !important;
+    color: var(--ipam-text) !important;
+    font-weight: 600;
+  }
+  & .list-group-item, & .panel.panel-default .list-group-item {
+    background: transparent !important;
+    border-color: var(--ipam-border) !important;
+    color: var(--ipam-text-muted);
+  }
+  & .adminMenu ul.list-group li, & .toolsMenu ul.list-group li {
+    background: transparent !important;
+  }
+  & .adminMenu ul.list-group li:hover, & .toolsMenu ul.list-group li:hover,
+  & a.list-group-item:hover {
+    background: var(--ipam-surface-2) !important;
+  }
+  & .adminMenu ul.list-group li.active, & .toolsMenu ul.list-group li.active,
+  & .list-group-item.active {
+    background: var(--ipam-accent-soft) !important;
+    border-color: transparent !important;
+    box-shadow: inset 2px 0 0 var(--ipam-accent);
+    color: var(--ipam-text);
+  }
+
+  /* -------------------------------------------------------------- tables */
+  & table.table {
+    background: transparent !important;
+    font-variant-numeric: tabular-nums;
+  }
+  & table.table th {
+    color: var(--ipam-text-muted) !important;
+    font-weight: 600;
+    background: transparent !important;
+    border-top: 0 !important;
+    border-bottom: 1px solid var(--ipam-border-strong) !important;
+  }
+  & table.table th a { color: inherit !important; }
+  & table.table th a:hover { color: var(--ipam-text) !important; }
+  & table.table td {
+    border-top: 1px solid var(--ipam-border) !important;
+  }
+  & table.table > tbody > tr:hover > td {
+    background: rgba(255, 255, 255, 0.025) !important;
+  }
+  & table.table td.ip a, & table.table td.ipaddress a {
+    color: var(--ipam-text) !important;
+  }
+  & table.table td.ip a:hover, & table.table td.ipaddress a:hover {
+    color: var(--ipam-accent-hover) !important;
+  }
+  & table.table td.ipaddress, & table.table td.ip {
+    font-family: var(--ipam-mono);
+    font-size: 12.5px;
+  }
+  & table.table td.ipaddress, & table.table td.hostname, & table.table td.ip {
+    white-space: nowrap;
+  }
+
+  /* list tables (bootstrap-table + dashboard): roomier rows, card container */
+  & .bootstrap-table .fixed-table-container {
+    background: var(--ipam-surface);
+    border: 1px solid var(--ipam-border) !important;
+    border-radius: var(--ipam-radius-lg);
+    overflow: hidden;
+  }
+  & .bootstrap-table .table { border-bottom: 0 !important; margin: 0; }
+  & .bootstrap-table .table > thead > tr > th,
+  & #dashboard .table th {
+    padding: 9px 8px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ipam-text-faint) !important;
+    background: var(--ipam-surface-2) !important;
+    white-space: nowrap;
+  }
+  & .bootstrap-table .table > thead > tr > th .th-inner {
+    padding: 0;
+    color: inherit !important; /* base CSS hard-codes #428bca */
+  }
+  & .bootstrap-table .table > thead > tr > th:hover { color: var(--ipam-text-muted) !important; }
+  & .bootstrap-table .table > tbody > tr > td,
+  & #dashboard .table td {
+    padding: 6px 8px;
+    vertical-align: middle;
+  }
+  & .bootstrap-table .table > thead > tr > th:first-child,
+  & .bootstrap-table .table > tbody > tr > td:first-child {
+    padding-left: 12px;
+  }
+  & .bootstrap-table .table > tbody > tr:first-child > td { border-top: 0 !important; }
+  & .fixed-table-pagination .pagination-info,
+  & .fixed-table-pagination .page-list {
+    color: var(--ipam-text-faint);
+    font-size: 12px;
+  }
+  & .fixed-table-toolbar { margin-bottom: 4px; }
+  & .fixed-table-loading { background: var(--ipam-surface) !important; color: var(--ipam-text-muted); }
+
+  /* free range / success rows */
+  & table.table tr.success > td,
+  & table.table td.unused,
+  & table.table.ipaddresses .unused {
+    color: var(--ipam-success-text) !important;
+    background: var(--ipam-success-soft) !important;
+  }
+  & table.table td.unused {
+    font-family: var(--ipam-mono);
+    font-size: 12px;
+  }
+  & table.table tr.success:hover > td { background: rgba(63, 185, 80, 0.17) !important; }
+
+  /* row action buttons: one line, quiet until you need them */
+  & table.table td.btn-actions {
+    width: 1%;
+    white-space: nowrap;
+  }
+  & table.table td.btn-actions .btn-group {
+    display: inline-flex;
+    flex-wrap: nowrap;
+  }
+  & table.table td.btn-actions .btn,
+  & table.table .btn-group .btn.btn-xs {
+    color: var(--ipam-text-faint) !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  & table.table tr:hover td.btn-actions .btn,
+  & table.table tr:hover .btn-group .btn.btn-xs {
+    color: var(--ipam-text-muted) !important;
+  }
+  & table.table td.btn-actions .btn:hover,
+  & table.table .btn-group .btn.btn-xs:hover {
+    color: var(--ipam-text) !important;
+    background: var(--ipam-surface-3) !important;
+  }
+  & table.table td.btn-actions .btn:hover .fa-times,
+  & table.table .btn-group .btn.btn-xs:hover .fa-times {
+    color: var(--ipam-danger-text) !important;
+  }
+
+  /* subnet details key/value table */
+  & table.ipaddress_subnet th {
+    border: 0 !important;
+    font-weight: 500;
+    color: var(--ipam-text-faint) !important;
+  }
+  & table.ipaddress_subnet td { border: 0 !important; }
+  & .subnet_badge, & .ipaddress_subnet .subnet_badge {
+    display: inline-block;
+    padding: 3px 10px;
+    font-family: var(--ipam-mono);
+    font-size: 12.5px;
+    color: var(--ipam-text) !important;
+    background: var(--ipam-surface-2) !important;
+    border: 1px solid var(--ipam-border-strong) !important;
+    border-radius: var(--ipam-radius-sm);
+  }
+
+  /* ------------------------------------------------- visual subnet grid */
+  & div.ip_vis span {
+    width: 36px;
+    height: 24px;
+    margin: 0 6px 6px 0;
+    padding: 3px 0;
+    font-family: var(--ipam-mono);
+    font-size: 10.5px;
+    line-height: 16px;
+    color: var(--ipam-text-faint) !important;
+    background: var(--ipam-surface) !important;
+    border: 1px solid var(--ipam-border-strong) !important;
+    border-radius: 5px;
+    box-shadow: none;
+    transition: transform 0.12s, border-color 0.12s, color 0.12s;
+  }
+  & div.ip_vis span:hover {
+    transform: translateY(-1px);
+    color: var(--ipam-text) !important;
+    border-color: var(--ipam-accent) !important;
+  }
+  /* Tagged addresses get the tag colour as an inline "background: … !important"
+     (Administration > Tags), which no stylesheet can override. An inset
+     box-shadow paints above the background, so we cover it with our own fill. */
+  & div.ip_vis span:not(.ip-unused) {
+    color: var(--ipam-text) !important;
+    box-shadow: inset 0 0 0 40px var(--ipam-surface-3);
+  }
+  & div.ip_vis span.ip-2 { /* used */
+    color: var(--ipam-success-text) !important;
+    border-color: rgba(63, 185, 80, 0.45) !important;
+    box-shadow: inset 0 0 0 40px rgba(63, 185, 80, 0.16), inset 0 0 0 40px var(--ipam-surface);
+  }
+  & div.ip_vis span.ip-1 { /* offline */
+    color: var(--ipam-danger-text) !important;
+    border-color: rgba(248, 81, 73, 0.45) !important;
+    box-shadow: inset 0 0 0 40px rgba(248, 81, 73, 0.16), inset 0 0 0 40px var(--ipam-surface);
+  }
+  & div.ip_vis span.ip-3 { /* reserved */
+    color: var(--ipam-warning-text) !important;
+    border-color: rgba(210, 153, 34, 0.45) !important;
+    box-shadow: inset 0 0 0 40px rgba(210, 153, 34, 0.16), inset 0 0 0 40px var(--ipam-surface);
+  }
+  & div.ip_vis span.ip-4 { /* DHCP */
+    color: var(--ipam-accent-hover) !important;
+    border-color: rgba(76, 157, 255, 0.45) !important;
+    box-shadow: inset 0 0 0 40px rgba(76, 157, 255, 0.16), inset 0 0 0 40px var(--ipam-surface);
+  }
+
+  /* ------------------------------------------- subnet usage graph (donut)
+     app/subnets/subnet-details/subnet-graph.php draws a Flot pie on a canvas
+     sized from #pieChart, so shrinking the box shrinks the chart. The canvas
+     colours can't be restyled, so: a track ring sits behind it (the "Free"
+     slice is ~transparent in the dark theme), and a mask in front cuts the
+     donut hole and hides Flot's #ccc outline. Legend + % labels are moved
+     into a list beside the donut. */
+  & div:has(> #pieChart) {
+    --usage-bg: var(--ipam-surface);
+    --usage-track: #252d3a;
+    margin-top: 6px;
+    padding: 12px 16px 14px;
+    background: var(--usage-bg);
+    border: 1px solid var(--ipam-border);
+    border-radius: var(--ipam-radius-lg);
+  }
+  & div:has(> #pieChart) > h4 {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ipam-text-faint) !important;
+  }
+  & div:has(> #pieChart) > hr { display: none; }
+  & #pieChart {
+    width: 120px !important; /* inline style is 220px tall, full width */
+    height: 120px !important;
+  }
+  & #pieChart::before, & #pieChart::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  & #pieChart::before { /* track, behind the canvas; pie radius = 0.9 x 60px */
+    inset: 6px;
+    background: var(--usage-track);
+  }
+  & #pieChart::after { /* hole + outline mask, in front of the canvas */
+    inset: 4px;
+    border: 3px solid var(--usage-bg);
+    background: radial-gradient(circle closest-side, var(--usage-bg) 68%, transparent 69%);
+  }
+  & #pieChart canvas.flot-overlay { opacity: 0.35; } /* soften Flot's white hover highlight */
+  & #pieChart .legend > div { display: none; }
+  & #pieChart .legend table {
+    top: 24px !important;
+    left: 140px !important;
+    right: auto !important;
+    width: 150px; /* right edge at 290px, same as the % labels */
+    font-size: 12.5px !important;
+    color: var(--ipam-text-muted) !important;
+    border-collapse: collapse;
+  }
+  & #pieChart .legend td { height: 24px; padding: 0; vertical-align: middle; }
+  & #pieChart .legend td.legendLabel { padding-left: 8px; white-space: nowrap; }
+  & #pieChart .legend td.legendColorBox > div { border: 0 !important; padding: 0 !important; }
+  & #pieChart .legend td.legendColorBox > div > div {
+    width: 0 !important;
+    border-width: 5px !important;
+    border-radius: 50%;
+    background: var(--usage-track);
+  }
+  /* Zero-size labels: Flot shrinks the pie when its labels don't fit the
+     canvas, so let them measure 0x0 and right-align the text from here. */
+  & #pieChart .pieLabel {
+    left: 290px !important;
+    width: 0;
+    height: 0;
+    overflow: visible;
+  }
+  & #pieChart .pieLabel div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    white-space: nowrap;
+    padding: 0 !important;
+    font-family: var(--ipam-mono);
+    font-size: 12px !important;
+    line-height: 24px;
+    color: var(--ipam-text) !important;
+    background: none !important;
+  }
+  /* label N belongs to series N = legend row N+1 */
+  & #pieChart #pieLabel0 { top: 24px !important; }
+  & #pieChart #pieLabel1 { top: 48px !important; }
+  & #pieChart #pieLabel2 { top: 72px !important; }
+  & #pieChart #pieLabel3 { top: 96px !important; }
+  & #pieChart #pieLabel4 { top: 120px !important; }
+  & #pieChart #pieLabel5 { top: 144px !important; }
+  /* Flot skips labels for slices under 1%; say so instead of leaving a gap */
+  & #pieChart .legend td.legendLabel::after {
+    float: right;
+    font-family: var(--ipam-mono);
+    font-size: 12px;
+    color: var(--ipam-text-faint);
+  }
+  & #pieChart:not(:has(#pieLabel0)) .legend tr:nth-child(1) td.legendLabel::after,
+  & #pieChart:not(:has(#pieLabel1)) .legend tr:nth-child(2) td.legendLabel::after,
+  & #pieChart:not(:has(#pieLabel2)) .legend tr:nth-child(3) td.legendLabel::after,
+  & #pieChart:not(:has(#pieLabel3)) .legend tr:nth-child(4) td.legendLabel::after,
+  & #pieChart:not(:has(#pieLabel4)) .legend tr:nth-child(5) td.legendLabel::after,
+  & #pieChart:not(:has(#pieLabel5)) .legend tr:nth-child(6) td.legendLabel::after {
+    content: "<1%";
+  }
+
+  /* ------------------------------------------------------------- buttons */
+  & .btn {
+    font-weight: 500;
+    text-shadow: none;
+    background-image: none;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+  }
+  & .btn-default {
+    color: var(--ipam-text) !important;
+    background: var(--ipam-surface-2) !important;
+    border-color: var(--ipam-border-strong) !important;
+  }
+  & .btn-default:hover, & .btn-default:focus {
+    background: var(--ipam-surface-3) !important;
+    border-color: #3b4657 !important;
+  }
+  & .btn-default.active, & .btn-default:active, & .open > .dropdown-toggle.btn-default {
+    background: var(--ipam-surface-3) !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+  }
+  & .btn-primary, & .btn-info {
+    color: #fff !important;
+    background: var(--ipam-accent-strong) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  & .btn-primary:hover, & .btn-info:hover { background: #3d8ef5 !important; }
+  & .btn-success {
+    color: #fff !important;
+    background: #238636 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  & .btn-success:hover, & .btn-success:focus { background: #2ea043 !important; }
+  & .btn-danger, & div.btn-group .btn.btn-danger {
+    color: #fff !important;
+    background: #b62324 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  & .btn-danger:hover { background: #da3633 !important; }
+  & .btn-warning {
+    color: #fff !important;
+    background: #9e6a03 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  & .btn-warning:hover { background: #bb8009 !important; }
+  & .btn[disabled], & .btn.disabled { opacity: 0.45; }
+
+  /* --------------------------------------------------------------- forms */
+  & .form-control,
+  & input[type="text"], & input[type="search"], & input[type="password"],
+  & input[type="email"], & input[type="number"], & input[type="date"],
+  & textarea, & select {
+    color: var(--ipam-text) !important;
+    background-color: var(--ipam-bg) !important;
+    border-color: var(--ipam-border-strong) !important;
+    box-shadow: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  & .form-control:focus,
+  & input[type="text"]:focus, & input[type="search"]:focus, & input[type="password"]:focus,
+  & textarea:focus, & select:focus {
+    outline: 0;
+    border-color: var(--ipam-accent) !important;
+    box-shadow: 0 0 0 3px var(--ipam-accent-ring) !important;
+  }
+  & ::placeholder { color: var(--ipam-text-faint); opacity: 1; }
+  & select option, & select optgroup {
+    color: var(--ipam-text);
+    background: var(--ipam-surface-2);
+  }
+  & input[type="checkbox"], & input[type="radio"] { accent-color: var(--ipam-accent); }
+  & .input-group-addon {
+    color: var(--ipam-text-muted) !important;
+    background: var(--ipam-surface-2) !important;
+    border-color: var(--ipam-border-strong) !important;
+  }
+  & .form-inline { border-bottom-color: var(--ipam-border); }
+
+  & .bootstrap-switch { border-color: var(--ipam-border-strong) !important; }
+  & .bootstrap-switch .bootstrap-switch-handle-on {
+    color: #fff !important;
+    background: var(--ipam-accent-strong) !important;
+  }
+  & .bootstrap-switch .bootstrap-switch-handle-off {
+    color: var(--ipam-text-muted) !important;
+    background: var(--ipam-surface-2) !important;
+  }
+  & .bootstrap-switch .bootstrap-switch-label { background: var(--ipam-surface-3) !important; }
+
+  /* ---------------------------------------------------------------- tabs */
+  & .nav-tabs {
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--ipam-border) !important;
+  }
+  & .nav-tabs > li > a {
+    margin-right: 2px;
+    padding: 9px 14px;
+    font-weight: 500;
+    color: var(--ipam-text-muted) !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: inset 0 -2px 0 transparent;
+    transition: color 0.15s, box-shadow 0.15s;
+  }
+  & .nav-tabs > li > a:hover {
+    color: var(--ipam-text) !important;
+    box-shadow: inset 0 -2px 0 var(--ipam-border-strong);
+  }
+  & .nav-tabs > li.active > a,
+  & .nav-tabs > li.active > a:hover,
+  & .nav-tabs > li.active > a:focus {
+    color: var(--ipam-text) !important;
+    background: transparent !important;
+    box-shadow: inset 0 -2px 0 var(--ipam-accent);
+  }
+
+  /* ------------------------------------------------------ badges / alerts */
+  & .badge {
+    padding: 2px 8px;
+    font-family: var(--ipam-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ipam-text) !important;
+    background: var(--ipam-surface-2) !important;
+    border: 1px solid var(--ipam-border-strong) !important;
+    border-radius: 999px;
+    text-shadow: none;
+  }
+  & .badge.alert-success { color: var(--ipam-success-text) !important; background: var(--ipam-success-soft) !important; border-color: rgba(63, 185, 80, 0.4) !important; }
+  & .badge.alert-danger  { color: var(--ipam-danger-text) !important;  background: var(--ipam-danger-soft) !important;  border-color: rgba(248, 81, 73, 0.4) !important; }
+  & .badge.alert-warning { color: var(--ipam-warning-text) !important; background: var(--ipam-warning-soft) !important; border-color: rgba(210, 153, 34, 0.4) !important; }
+  & .badge.alert-info    { color: var(--ipam-accent-hover) !important; background: var(--ipam-accent-soft) !important;  border-color: rgba(76, 157, 255, 0.4) !important; }
+
+  & .alert {
+    border-radius: var(--ipam-radius);
+    text-shadow: none;
+    box-shadow: none;
+  }
+  & .alert.alert-info    { color: #a8ceff !important; background: var(--ipam-accent-soft) !important;  border-color: rgba(76, 157, 255, 0.35) !important; }
+  & .alert.alert-success { color: #9be9a8 !important; background: var(--ipam-success-soft) !important; border-color: rgba(63, 185, 80, 0.35) !important; }
+  & .alert.alert-warning { color: #f2cc60 !important; background: var(--ipam-warning-soft) !important; border-color: rgba(210, 153, 34, 0.4) !important; }
+  & .alert.alert-danger  { color: #ffa198 !important; background: var(--ipam-danger-soft) !important;  border-color: rgba(248, 81, 73, 0.4) !important; }
+  & .alert.alert-muted   { color: var(--ipam-text-faint) !important; background: transparent !important; }
+
+  & span.text-success, & span.text-danger {
+    padding: 1px 8px;
+    border-radius: 999px;
+  }
+  & span.text-success { color: var(--ipam-success-text) !important; background: var(--ipam-success-soft) !important; border: 1px solid rgba(63, 185, 80, 0.4) !important; }
+  & span.text-danger  { color: var(--ipam-danger-text) !important;  background: var(--ipam-danger-soft) !important;  border: 1px solid rgba(248, 81, 73, 0.4) !important; }
+
+  & blockquote { border-left-color: var(--ipam-border-strong); }
+
+  /* ---------------------------------------------------------- pagination */
+  & .pagination > li > a, & .pagination > li > span {
+    color: var(--ipam-text-muted) !important;
+    background: var(--ipam-surface) !important;
+    border-color: var(--ipam-border-strong) !important;
+  }
+  & .pagination > li > a:hover {
+    color: var(--ipam-text) !important;
+    background: var(--ipam-surface-2) !important;
+  }
+  & .pagination > .active > a, & .pagination > .active > a:hover, & .pagination > .active > span {
+    color: #fff !important;
+    background: var(--ipam-accent-strong) !important;
+    border-color: var(--ipam-accent-strong) !important;
+  }
+
+  /* ------------------------------------------------- popovers / tooltips */
+  & .popover {
+    color: var(--ipam-text);
+    background: var(--ipam-surface-2) !important;
+    border: 1px solid var(--ipam-border-strong) !important;
+    border-radius: var(--ipam-radius);
+    box-shadow: var(--ipam-shadow);
+  }
+  & .popover .popover-title {
+    font-weight: 600;
+    background: transparent !important;
+    border-bottom: 1px solid var(--ipam-border) !important;
+  }
+  & .popover.top > .arrow::after { border-top-color: var(--ipam-surface-2) !important; }
+  & .popover.right > .arrow::after { border-right-color: var(--ipam-surface-2) !important; }
+  & .popover.bottom > .arrow::after { border-bottom-color: var(--ipam-surface-2) !important; }
+  & .popover.left > .arrow::after { border-left-color: var(--ipam-surface-2) !important; }
+  & .tooltip-inner {
+    padding: 5px 9px;
+    font-size: 12px;
+    color: var(--ipam-text);
+    background: #05070a;
+    border: 1px solid var(--ipam-border-strong);
+    border-radius: var(--ipam-radius-sm);
+  }
+
+  /* -------------------------------------------------------------- modals */
+  & #popupOverlay, & #popupOverlay2 {
+    background: rgba(4, 6, 9, 0.72) !important;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  & #popup, & div.popup {
+    color: var(--ipam-text);
+    background: var(--ipam-surface) !important;
+    border: 1px solid var(--ipam-border-strong) !important;
+    border-radius: var(--ipam-radius-lg) !important;
+    box-shadow: var(--ipam-shadow-lg) !important;
+  }
+  & #popup div.pHeader, & div.popup .pHeader {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ipam-text);
+    background: transparent !important;
+    border-bottom: 1px solid var(--ipam-border) !important;
+  }
+  & #popup div.pContent, & div.popup .pContent { background: transparent !important; }
+  & #popup div.pFooter, & div.popup .pFooter {
+    background: var(--ipam-bg) !important;
+    border-top: 1px solid var(--ipam-border) !important;
+    border-radius: 0 0 var(--ipam-radius-lg) var(--ipam-radius-lg);
+    box-shadow: none;
+  }
+
+  /* -------------------------------------------------------------- footer */
+  & div.footer {
+    padding: 5px 0;
+    font-size: 11.5px;
+    color: var(--ipam-text-faint);
+    background: rgba(11, 14, 19, 0.85) !important;
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    backdrop-filter: saturate(140%) blur(10px);
+    border-top: 1px solid var(--ipam-border) !important;
+  }
+  & div.footer a, & table.donate td {
+    color: var(--ipam-text-faint) !important;
+    text-shadow: none !important;
+  }
+  & table.donate td { border-left-color: var(--ipam-border-strong) !important; }
+
+  /* --------------------------------------------------------------- misc */
+  & .progress {
+    background: var(--ipam-surface-2) !important;
+    border-radius: 999px;
+    box-shadow: none;
+  }
+  & .ui-slider-handle, & .slider-handle { background: var(--ipam-accent) !important; }
+  & .ui-slider, & .slider-track { background: var(--ipam-surface-3) !important; }
+  & .instructions, & .ipreqMenu {
+    background: var(--ipam-surface) !important;
+    border: 1px solid var(--ipam-border) !important;
+    border-radius: var(--ipam-radius);
+  }
+  & div#login {
+    background: var(--ipam-surface) !important;
+    border: 1px solid var(--ipam-border) !important;
+    border-radius: var(--ipam-radius-lg);
+    box-shadow: var(--ipam-shadow);
+  }
+  & div#login legend {
+    color: var(--ipam-text);
+    border-bottom: 1px solid var(--ipam-border) !important;
+  }
+
+  /* ---------------------------------------------------------- responsive */
+  @media (max-width: 991px) {
+    & #header > div,
+    & #header > div:nth-child(2),
+    & #header #user_menu {
+      flex: 1 1 100%;
+      margin: 6px 0 0;
+      padding: 0;
+      border-left: 0;
+    }
+    & #user_menu .container-fluid { grid-template-columns: 1fr auto auto; }
+  }
+}
